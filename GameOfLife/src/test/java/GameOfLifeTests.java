@@ -23,7 +23,7 @@ public class GameOfLifeTests {
         assertEquals(0, newState.size());
     }
 
-    //@Test
+    @Test
     void threeDiagonalCells_MiddleCellRemains() {
         HashSet<Cell> seed = new HashSet<>();
         Cell cell1 = new Cell(0,0);
