@@ -35,5 +35,6 @@ public class GameOfLifeTests {
         Game game = new Game(seed);
         HashSet<Cell> newState = game.tick();
         assertEquals(1, newState.size());
+        assertEquals(cell1, newState.toArray()[0]);
     }
 }
