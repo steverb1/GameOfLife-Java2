@@ -19,14 +19,16 @@ public class Game {
 
     private int countNeighbors(Cell cell) {
         int count = 0;
-        Cell neighbor = new Cell(cell.x - 1,cell.y + 1);
-        if (currentCellState.contains(neighbor)) {
-            count++;
-        }
-        neighbor = new Cell(cell.x + 1,cell.y - 1);
-        if (currentCellState.contains(neighbor)) {
-            count++;
+        HashSet<Cell> neighbours=new HashSet<>();
+
+        neighbours.add(new Cell(cell.x - 1,cell.y + 1));
+        neighbours.add(new Cell(cell.x + 1,cell.y - 1));
+        for (Cell neighbor: neighbours) {
+            if (currentCellState.contains(neighbor)) {
+                count++;
+            }
         }
         return count;
+
     }
 }
