@@ -37,3 +37,4 @@ public class GameOfLifeTests {
         assertEquals(1, newState.size());
     }
 }
+
