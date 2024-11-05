@@ -37,4 +37,22 @@ public class GameOfLifeTests {
         assertEquals(1, newState.size());
         assertEquals(cell1, newState.toArray()[0]);
     }
+
+    @Test
+    void cellWithThreeNeighbors_Survives() {
+        HashSet<Cell> seed = new HashSet<>();
+        Cell cell1 = new Cell(0,0);
+        Cell cell2 = new Cell(-1,0);
+        Cell cell3 = new Cell(1,0);
+        Cell cell4 = new Cell(-1,1);
+        seed.add(cell1);
+        seed.add(cell2);
+        seed.add(cell3);
+        seed.add(cell4);
+
+        Game game = new Game(seed);
+        HashSet<Cell> newState = game.tick();
+        assertEquals(3, newState.size());
+        assertEquals(cell1, newState.toArray()[0]);
+    }
 }

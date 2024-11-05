@@ -10,7 +10,7 @@ public class Game {
         HashSet<Cell> newState=new HashSet<>();
         for (Cell cell : currentCellState) {
             int numberOfNeighbors = countNeighbors(cell);
-            if (numberOfNeighbors == 2) {
+            if (numberOfNeighbors == 2 || numberOfNeighbors == 3) {
                 newState.add(cell);
             }
         }
@@ -22,7 +22,13 @@ public class Game {
         HashSet<Cell> neighbours=new HashSet<>();
 
         neighbours.add(new Cell(cell.x - 1,cell.y + 1));
+        neighbours.add(new Cell(cell.x,cell.y + 1));
+        neighbours.add(new Cell(cell.x + 1,cell.y + 1));
+        neighbours.add(new Cell(cell.x + 1,cell.y));
         neighbours.add(new Cell(cell.x + 1,cell.y - 1));
+        neighbours.add(new Cell(cell.x,cell.y - 1));
+        neighbours.add(new Cell(cell.x - 1,cell.y - 1));
+        neighbours.add(new Cell(cell.x - 1,cell.y));
         for (Cell neighbor: neighbours) {
             if (currentCellState.contains(neighbor)) {
                 count++;
