@@ -59,4 +59,17 @@ public class GameOfLifeTests {
         assertTrue(newState.contains(cell3));
         assertTrue(newState.contains(cell4));
     }
+
+    @Test
+    void cellWithOneNeighbor_Dies() {
+        HashSet<Cell> seed = new HashSet<>();
+        Cell cell1 = new Cell(0,0);
+        Cell cell2 = new Cell(1,0);
+        seed.add(cell1);
+        seed.add(cell2);
+
+        Game game = new Game(seed);
+        HashSet<Cell> newState = game.tick();
+        assertEquals(0, newState.size());
+    }
 }
