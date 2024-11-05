@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameOfLifeTests {
     @Test
@@ -42,9 +43,9 @@ public class GameOfLifeTests {
     void cellWithThreeNeighbors_Survives() {
         HashSet<Cell> seed = new HashSet<>();
         Cell cell1 = new Cell(0,0);
-        Cell cell2 = new Cell(-1,0);
-        Cell cell3 = new Cell(1,0);
-        Cell cell4 = new Cell(-1,1);
+        Cell cell2 = new Cell(0,1);
+        Cell cell3 = new Cell(1,1);
+        Cell cell4 = new Cell(1,0);
         seed.add(cell1);
         seed.add(cell2);
         seed.add(cell3);
@@ -52,7 +53,10 @@ public class GameOfLifeTests {
 
         Game game = new Game(seed);
         HashSet<Cell> newState = game.tick();
-        assertEquals(3, newState.size());
-        assertEquals(cell1, newState.toArray()[0]);
+        assertEquals(4, newState.size());
+        assertTrue(newState.contains(cell1));
+        assertTrue(newState.contains(cell2));
+        assertTrue(newState.contains(cell3));
+        assertTrue(newState.contains(cell4));
     }
 }
