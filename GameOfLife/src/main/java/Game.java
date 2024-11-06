@@ -44,16 +44,7 @@ public class Game {
 
     private int countNeighbors(Cell cell) {
         int count = 0;
-        HashSet<Cell> neighbours=new HashSet<>();
-
-        neighbours.add(new Cell(cell.x - 1,cell.y + 1));
-        neighbours.add(new Cell(cell.x,cell.y + 1));
-        neighbours.add(new Cell(cell.x + 1,cell.y + 1));
-        neighbours.add(new Cell(cell.x + 1,cell.y));
-        neighbours.add(new Cell(cell.x + 1,cell.y - 1));
-        neighbours.add(new Cell(cell.x,cell.y - 1));
-        neighbours.add(new Cell(cell.x - 1,cell.y - 1));
-        neighbours.add(new Cell(cell.x - 1,cell.y));
+        HashSet<Cell> neighbours = findNeighbors(cell);
         for (Cell neighbor: neighbours) {
             if (currentCellState.contains(neighbor)) {
                 count++;
