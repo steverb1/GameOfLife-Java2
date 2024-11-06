@@ -1,7 +1,7 @@
 import java.util.HashSet;
 
 public class Game {
-     HashSet<Cell> currentCellState;
+    HashSet<Cell> currentCellState;
     public Game(HashSet<Cell> seed) {
         currentCellState=seed;
     }
@@ -28,6 +28,7 @@ public class Game {
                 }
             }
         }
+        
         return newState;
     }
 
@@ -54,7 +55,7 @@ public class Game {
                 count++;
             }
         }
-        return count;
 
+        return count;
     }
 }
