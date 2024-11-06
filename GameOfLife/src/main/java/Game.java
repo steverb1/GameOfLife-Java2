@@ -11,6 +11,10 @@ public class Game {
         for (Cell cell : currentCellState) {
             int numberOfNeighbors = countNeighbors(cell);
 
+            if (numberOfNeighbors == 4) {
+                continue;
+            }
+
             if (numberOfNeighbors == 2 || numberOfNeighbors == 3) {
                 newState.add(cell);
             }
