@@ -3,7 +3,7 @@ import java.util.HashSet;
 public class Game {
     HashSet<Cell> currentCellState;
     public Game(HashSet<Cell> seed) {
-        currentCellState=seed;
+        currentCellState = seed;
     }
 
     public HashSet<Cell> tick() {
@@ -28,7 +28,7 @@ public class Game {
                 }
             }
         }
-        
+
         return newState;
     }
 

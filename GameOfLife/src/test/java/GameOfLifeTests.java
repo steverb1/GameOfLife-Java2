@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GameOfLifeTests {
     @Test
-    void emptyGridRemainsEmpty() {
+    void emptyGrid_RemainsEmpty() {
         HashSet<Cell> seed = new HashSet<>();
         Game game = new Game(seed);
         HashSet<Cell> newState = game.tick();
@@ -14,7 +14,7 @@ public class GameOfLifeTests {
     }
 
     @Test
-    void oneLivingCellDies() {
+    void oneLivingCell_Dies() {
         HashSet<Cell> seed = new HashSet<>();
         Cell cell=new Cell(0,0);
         seed.add(cell);
@@ -24,7 +24,7 @@ public class GameOfLifeTests {
     }
 
     @Test
-    void threeDiagonalCells_MiddleCellRemains() {
+    void cellsWithOnlyOneNeighbor_Die() {
         HashSet<Cell> seed = new HashSet<>();
         Cell cell1 = new Cell(0,0);
         Cell cell2 = new Cell(-1,1);
