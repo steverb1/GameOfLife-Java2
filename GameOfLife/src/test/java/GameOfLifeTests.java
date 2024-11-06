@@ -72,4 +72,6 @@ public class GameOfLifeTests {
         HashSet<Cell> newState = game.tick();
         assertEquals(0, newState.size());
     }
+
+    // Next test: cell with 4 or more neighbors dies.
 }
