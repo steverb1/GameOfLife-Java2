@@ -10,6 +10,10 @@ public class Game {
         HashSet<Cell> newState=new HashSet<>();
         for (Cell cell : currentCellState) {
             int numberOfNeighbors = countNeighbors(cell);
+
+            if (numberOfNeighbors == 4) {
+                newState.remove(cell);
+            }
             if (numberOfNeighbors == 2 || numberOfNeighbors == 3) {
                 newState.add(cell);
             }

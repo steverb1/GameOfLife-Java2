@@ -2,8 +2,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameOfLifeTests {
     @Test
@@ -74,4 +73,23 @@ public class GameOfLifeTests {
     }
 
     // Next test: cell with 4 or more neighbors dies.
+    @Test
+    void cellWithFourNeighbor_Dies(){
+        HashSet<Cell> seed = new HashSet<>();
+        Cell cell1 = new Cell(0,0);
+        Cell cell2 = new Cell(0,1);
+        Cell cell3 = new Cell(-1,0);
+        Cell cell4 = new Cell(-1,1);
+        Cell cell5 = new Cell(1,0);
+        seed.add(cell1);
+        seed.add(cell2);
+        seed.add(cell3);
+        seed.add(cell4);
+        seed.add(cell5);
+
+        Game game = new Game(seed);
+        HashSet<Cell> newState = game.tick();
+        assertEquals(5, newState.size());
+        assertFalse(newState.contains(cell1));
+    }
 }
