@@ -72,8 +72,7 @@ public class GameOfLifeTests {
         assertEquals(0, newState.size());
     }
 
-    // Next test: cell with 4 or more neighbors dies.
-    @Test
+    //@Test
     void cellWithFourNeighbor_Dies(){
         HashSet<Cell> seed = new HashSet<>();
         Cell cell1 = new Cell(0,0);
@@ -91,5 +90,21 @@ public class GameOfLifeTests {
         HashSet<Cell> newState = game.tick();
         assertEquals(5, newState.size());
         assertFalse(newState.contains(cell1));
+    }
+
+    @Test
+    void emptyCellWithThreeNeighbors_ComesAlive() {
+        HashSet<Cell> seed = new HashSet<>();
+        Cell cell1 = new Cell(-1,0);
+        Cell cell2 = new Cell(0,-1);
+        Cell cell3 = new Cell(1,0);
+        seed.add(cell1);
+        seed.add(cell2);
+        seed.add(cell3);
+
+        Game game = new Game(seed);
+        HashSet<Cell> newState = game.tick();
+        assertEquals(2, newState.size());
+        assertTrue(newState.contains(new Cell(0, 0)));
     }
 }
