@@ -1,61 +1,51 @@
 import java.util.HashSet;
 
 public class Game {
-    HashSet<Cell> currentCellState;
+    private final HashSet<Cell> cells;
+
     public Game(HashSet<Cell> seed) {
-        currentCellState = seed;
+        this.cells = seed;
     }
 
     public HashSet<Cell> tick() {
-        HashSet<Cell> newState=new HashSet<>();
-        for (Cell cell : currentCellState) {
-            int numberOfNeighbors = countNeighbors(cell);
+        HashSet<Cell> survivors = new HashSet<>();
+        HashSet<Cell> potentialBirths = new HashSet<>();
 
-            if (numberOfNeighbors == 4) {
-                continue;
+        for (Cell cell : cells) {
+            int neighbors = countNeighbors(cell);
+            if (neighbors == 2 || neighbors == 3) {
+                survivors.add(cell);
             }
-
-            if (numberOfNeighbors == 2 || numberOfNeighbors == 3) {
-                newState.add(cell);
-            }
-
-            HashSet<Cell> neighbors = findNeighbors(cell);
-            for (Cell neighborCell : neighbors) {
-                if (!currentCellState.contains(neighborCell)) {
-                    if (countNeighbors(neighborCell) == 3) {
-                        newState.add(neighborCell);
+            
+            // Collect empty neighbor positions
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dy = -1; dy <= 1; dy++) {
+                    if (dx == 0 && dy == 0) continue;
+                    Cell empty = new Cell(cell.x + dx, cell.y + dy);
+                    if (!cells.contains(empty)) {
+                        potentialBirths.add(empty);
                     }
                 }
             }
         }
 
-        return newState;
-    }
+        // Check which empty cells should come alive
+        for (Cell empty : potentialBirths) {
+            if (countNeighbors(empty) == 3) {
+                survivors.add(empty);
+            }
+        }
 
-    private HashSet<Cell> findNeighbors(Cell cell) {
-        HashSet<Cell> neighbors = new HashSet<>();
-
-        neighbors.add(new Cell(cell.x - 1,cell.y + 1));
-        neighbors.add(new Cell(cell.x,cell.y + 1));
-        neighbors.add(new Cell(cell.x + 1,cell.y + 1));
-        neighbors.add(new Cell(cell.x + 1,cell.y));
-        neighbors.add(new Cell(cell.x + 1,cell.y - 1));
-        neighbors.add(new Cell(cell.x,cell.y - 1));
-        neighbors.add(new Cell(cell.x - 1,cell.y - 1));
-        neighbors.add(new Cell(cell.x - 1,cell.y));
-
-        return neighbors;
+        return survivors;
     }
 
     private int countNeighbors(Cell cell) {
         int count = 0;
-        HashSet<Cell> neighbours = findNeighbors(cell);
-        for (Cell neighbor: neighbours) {
-            if (currentCellState.contains(neighbor)) {
+        for (Cell other : cells) {
+            if (other != cell && cell.isNeighbor(other)) {
                 count++;
             }
         }
-
         return count;
     }
 }
