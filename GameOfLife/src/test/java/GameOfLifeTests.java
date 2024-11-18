@@ -105,6 +105,6 @@ public class GameOfLifeTests {
         Game game = new Game(seed);
         HashSet<Cell> newState = game.tick();
         
-        assertFalse(newState.contains(center));  // Center cell dies (4 neighbors)
+        assertFalse(newState.contains(center));
     }
 }
