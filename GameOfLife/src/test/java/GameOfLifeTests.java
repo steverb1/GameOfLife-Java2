@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,7 +10,7 @@ public class GameOfLifeTests {
     void emptyGrid_RemainsEmpty() {
         HashSet<Cell> seed = new HashSet<>();
         Game game = new Game(seed);
-        HashSet<Cell> newState = game.tick();
+        Set<Cell> newState = game.tick();
         assertEquals(0, newState.size());
     }
 
@@ -19,7 +20,7 @@ public class GameOfLifeTests {
         Cell cell=new Cell(0,0);
         seed.add(cell);
         Game game = new Game(seed);
-        HashSet<Cell> newState = game.tick();
+        Set<Cell> newState = game.tick();
         assertEquals(0, newState.size());
     }
 
@@ -33,7 +34,7 @@ public class GameOfLifeTests {
         seed.add(cell2);
         seed.add(cell3);
         Game game = new Game(seed);
-        HashSet<Cell> newState = game.tick();
+        Set<Cell> newState = game.tick();
         assertEquals(1, newState.size());
         assertEquals(cell1, newState.toArray()[0]);
     }
@@ -48,7 +49,7 @@ public class GameOfLifeTests {
         seed.add(cell2);
         seed.add(cell3);
         Game game = new Game(seed);
-        HashSet<Cell> newState = game.tick();
+        Set<Cell> newState = game.tick();
         assertEquals(1, newState.size());
         assertEquals(cell1, newState.toArray()[0]);
     }
@@ -63,7 +64,7 @@ public class GameOfLifeTests {
         seed.add(cell2);
         seed.add(cell3);
         Game game = new Game(seed);
-        HashSet<Cell> newState = game.tick();
+        Set<Cell> newState = game.tick();
         assertEquals(2, newState.size());
         assertTrue(newState.contains(cell1));
         assertTrue(newState.contains(new Cell(0, -1)));
@@ -81,7 +82,7 @@ public class GameOfLifeTests {
         seed.add(cell3);
         seed.add(cell4);
         Game game = new Game(seed);
-        HashSet<Cell> newState = game.tick();
+        Set<Cell> newState = game.tick();
         assertEquals(4, newState.size());
         assertFalse(newState.contains(cell4));
         assertTrue(newState.contains(new Cell(1, 0)));
@@ -103,7 +104,7 @@ public class GameOfLifeTests {
         seed.add(west);
         
         Game game = new Game(seed);
-        HashSet<Cell> newState = game.tick();
+        Set<Cell> newState = game.tick();
         
         assertFalse(newState.contains(center));
     }
