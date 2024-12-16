@@ -2,58 +2,58 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Game {
-    private final HashSet<Cell> currentState;
+    private Set<Cell> liveCells;
 
-    public Game(HashSet<Cell> seed) {
-        this.currentState = seed;
+    public Game(Set<Cell> seed) {
+        this.liveCells = seed;
     }
 
     public Set<Cell> tick() {
-        Set<Cell> newState = new HashSet<>();
-        Set<Cell> checkedCells = new HashSet<>();
+        Set<Cell> newLiveCells = new HashSet<>();
+        Set<Cell> potentialCells = new HashSet<>(liveCells);
 
-        for (Cell cell : currentState) {
-            int neighborCount = countNeighbors(cell);
+        // Add all neighbors of live cells to potential cells
+        for (Cell cell : liveCells) {
+            potentialCells.addAll(getNeighbors(cell));
+        }
 
-            // Check survival rules
-            if(neighborCount == 2 || neighborCount == 3) {
-                newState.add(cell);
-            }
-
-            checkedCells.add(cell);
-
-            // Check birth rule for the eight neighbors of the current cell
-            for (int dx = -1; dx <= 1; dx++) {
-                for (int dy = -1; dy <= 1; dy++) {
-                    if (dx == 0 && dy == 0) {
-                        continue;
-                    }
-                    Cell neighborCell = new Cell(cell.x + dx, cell.y + dy);
-
-                    if (!checkedCells.contains(neighborCell) && countNeighbors(neighborCell) == 3) {
-                        newState.add(neighborCell);
-                    }
-
-                    checkedCells.add(neighborCell);
+        for (Cell cell : potentialCells) {
+            int neighbors = countNeighbors(cell);
+            if (liveCells.contains(cell)) {
+                // Survival rule
+                if (neighbors == 2 || neighbors == 3) {
+                    newLiveCells.add(cell);
+                }
+            } else {
+                // Birth rule
+                if (neighbors == 3) {
+                    newLiveCells.add(cell);
                 }
             }
         }
+        return newLiveCells;
+    }
 
-        return newState;
+    private Set<Cell> getNeighbors(Cell cell) {
+        Set<Cell> neighbors = new HashSet<>();
+        int[][] directions = {
+            {-1, -1}, {-1, 0}, {-1, 1},
+            {0, -1},         {0, 1},
+            {1, -1}, {1, 0}, {1, 1}
+        };
+        for (int[] direction : directions) {
+            neighbors.add(new Cell(cell.x + direction[0], cell.y + direction[1]));
+        }
+        return neighbors;
     }
 
     private int countNeighbors(Cell cell) {
-        int liveNeighbors = 0;
-        for (int dx = -1; dx <= 1; dx++) {
-            for (int dy = -1; dy <= 1; dy++) {
-                if (dx != 0 || dy != 0) { // Skip the center cell
-                    Cell neighborCell = new Cell(cell.x + dx, cell.y + dy);
-                    if (this.currentState.contains(neighborCell)) {
-                        liveNeighbors++;
-                    }
-                }
+        int count = 0;
+        for (Cell neighbor : getNeighbors(cell)) {
+            if (liveCells.contains(neighbor)) {
+                count++;
             }
         }
-        return liveNeighbors;
+        return count;
     }
 }
