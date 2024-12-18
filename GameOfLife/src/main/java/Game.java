@@ -1,4 +1,6 @@
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class Game {
@@ -9,28 +11,34 @@ public class Game {
     }
 
     public Set<Cell> tick() {
-        Set<Cell> newLiveCells = new HashSet<>();
-        Set<Cell> potentialCells = new HashSet<>(liveCells);
+        Map<Cell, Integer> neighborCounts = new HashMap<>();
 
-        // Add all neighbors of live cells to potential cells
+        // Count neighbors for each cell
         for (Cell cell : liveCells) {
-            potentialCells.addAll(getNeighbors(cell));
+            for (Cell neighbor : getNeighbors(cell)) {
+                neighborCounts.put(neighbor, neighborCounts.getOrDefault(neighbor, 0) + 1);
+            }
         }
 
-        for (Cell cell : potentialCells) {
-            int neighbors = countNeighbors(cell);
+        Set<Cell> newLiveCells = new HashSet<>();
+
+        // Determine the next state of each cell
+        for (Map.Entry<Cell, Integer> entry : neighborCounts.entrySet()) {
+            Cell cell = entry.getKey();
+            int count = entry.getValue();
             if (liveCells.contains(cell)) {
                 // Survival rule
-                if (neighbors == 2 || neighbors == 3) {
+                if (count == 2 || count == 3) {
                     newLiveCells.add(cell);
                 }
             } else {
                 // Birth rule
-                if (neighbors == 3) {
+                if (count == 3) {
                     newLiveCells.add(cell);
                 }
             }
         }
+
         return newLiveCells;
     }
 
@@ -45,15 +53,5 @@ public class Game {
             neighbors.add(new Cell(cell.x + direction[0], cell.y + direction[1]));
         }
         return neighbors;
-    }
-
-    private int countNeighbors(Cell cell) {
-        int count = 0;
-        for (Cell neighbor : getNeighbors(cell)) {
-            if (liveCells.contains(neighbor)) {
-                count++;
-            }
-        }
-        return count;
     }
 }
